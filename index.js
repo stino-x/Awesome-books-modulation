@@ -32,12 +32,25 @@ if (myBooks.length > 0) {
   displayBooks(myBooks);
 }
 
+const errorMessage = () => {
+  const error = document.createElement('p');
+  error.innerHTML = 'Please enter a book title and author';
+  error.setAttribute('class', 'error');
+  form.appendChild(error);
+  setTimeout(() => {
+    error.remove();
+  }, 2000);
+};
+
 // Add book to List
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const title = titleInput.value;
   const author = authorInput.value;
   const book = { title, author };
+  if (authorInput.value === '' || titleInput.value === '') {
+    errorMessage();
+  }
   myBooks.push(book);
   localStorage.setItem('books', JSON.stringify(myBooks));
   displayBooks(myBooks);
